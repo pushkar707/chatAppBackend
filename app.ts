@@ -6,6 +6,7 @@ import cors from "cors"
 import cookieParser from "cookie-parser"
 import bodyParser = require("body-parser");
 import Chat from "./models/Chat";
+require('dotenv').config()
 
 import http from "http"
 import {Server} from "socket.io";
@@ -26,7 +27,7 @@ io.on('connection', (socket) => {
   })
 });
 
-mongoose.connect("mongodb+srv://bansalpushkar99:pushkar707@cluster0.guprrdh.mongodb.net/")
+mongoose.connect(process.env.MONGO_DB_URI || "")
 .then(() => {
   console.log("Connected to Mongodb");
 })
