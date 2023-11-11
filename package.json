@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "start": "node app.ts",
+    "start": "node app.js",
     "dev": "nodemon app.ts"
   },
   "keywords": [],

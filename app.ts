@@ -26,7 +26,7 @@ io.on('connection', (socket) => {
   })
 });
 
-mongoose.connect("mongodb://localhost:27017/chatApp")
+mongoose.connect("mongodb+srv://bansalpushkar99:pushkar707@cluster0.guprrdh.mongodb.net/")
 .then(() => {
   console.log("Connected to Mongodb");
 })
@@ -106,6 +106,7 @@ app.get("/username-check/:username",async(req:Request,res:Response) => {
   return res.json({exists:false})
 })
 
+// When searching for users to create a chat
 app.get("/username-search/:username",async(req:Request,res:Response) => {
   const {username} = req.params  
 
@@ -201,7 +202,6 @@ app.get("/message/:sender/:reciever",async(req:Request,res:Response) => {
   if(!chats){
     return res.json({"error":"chat not found"})
   }
-  console.log(senderUser.name);
   
   return res.json({"chats":chats.chats,"name":senderUser.name})
 })
