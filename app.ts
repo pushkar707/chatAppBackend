@@ -206,7 +206,7 @@ app.get("/message/:sender/:reciever",async(req:Request,res:Response) => {
     return res.json({"error":"chat not found"})
   }
   
-  return res.json({"chats":chats.chats,"name":senderUser.name})
+  return res.json({"chats":chats.chats,"name":senderUser.name,"imageUrl":senderUser.imageUrl})
 })
 
 app.get("/profile/:id", async(req:Request, res: Response) => {
@@ -219,17 +219,13 @@ app.get("/profile/:id", async(req:Request, res: Response) => {
 })
 
 app.post("/profile/change", async(req:Request, res:Response) => {
-  const {username,id,profileImageKey} = req.body
+  const {username,id,imageUrl} = req.body
   if(username){
     await User.findByIdAndUpdate(id, {username})
     return res.json({result:true})
   }
-  
-  if(profileImageKey.length){
-    
-  }
-  if (profileImageKey == ""){
-    await User.findByIdAndUpdate(id, {imageUrl:""})
+  if (imageUrl){
+    await User.findByIdAndUpdate(id, {imageUrl})
     return res.json({result:true})
   }
 })
