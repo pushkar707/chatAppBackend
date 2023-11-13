@@ -209,6 +209,28 @@ app.get("/message/:sender/:reciever",async(req:Request,res:Response) => {
   return res.json({"chats":chats.chats,"name":senderUser.name})
 })
 
+app.get("/profile/:id", async(req:Request, res: Response) => {
+  const {id} = req.params
+  const user = await User.findById(id)
+  if(user){
+    return res.json({result:true,user})
+  }
+  return res.json({result:false})
+})
+
+app.post("/profile/change", async(req:Request, res:Response) => {
+  const {username,id,profileImageKey} = req.body
+  if(username){
+    await User.findByIdAndUpdate(id, {username})
+    return res.json({result:true})
+  }
+  if(profileImageKey){
+    
+  }
+
+
+})
+
 
 server.listen(8000, () => {
   console.log('Server running on port 8000');

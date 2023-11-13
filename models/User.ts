@@ -7,6 +7,10 @@ const userSchema = new Schema(
     username: String,
     email:String,
     password: String,
+    imageUrl: {
+      type: String,
+      default: "https://static.vecteezy.com/system/resources/thumbnails/002/002/403/small/man-with-beard-avatar-character-isolated-icon-free-vector.jpg"
+    },
     people:[{
       user:{
         type:Schema.Types.ObjectId,
