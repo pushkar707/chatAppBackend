@@ -22,6 +22,7 @@ const io = new Server(server,{
 io.on('connection', (socket) => {
   console.log('a user connected');
   socket.on("chatMsg" , (data) => {
+    
     const clientSocketId = socket.id;
     io.emit(data.reciever, {sender:data.sender});
   })
