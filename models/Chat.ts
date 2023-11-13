@@ -3,6 +3,8 @@ import {Schema,model} from "mongoose"
 const chatSchema = new Schema(
   {
     chats:[{
+      awsFileKey:String,
+      awsFileType:String,
       message:String,
       sender:String,
       senderId:{

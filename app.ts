@@ -155,7 +155,7 @@ app.get("/chats/:id",async(req:Request,res:Response) => {
   const {id} = req.params
   const user = await User.findById(id)
   .populate("people.user")
-  .populate("people.chat")  
+  .populate("people.chat")
 
   if(!user){
     return res.json({"error":"No user found"})
@@ -165,8 +165,9 @@ app.get("/chats/:id",async(req:Request,res:Response) => {
   
 // Send a Msg
 app.post("/message/send",async(req:Request,res:Response) => {
-  const {sender,message,reciever} = req.body
-
+  const {sender,message,reciever,awsFileKey, awsFileType} = req.body
+  console.log(awsFileKey,awsFileType);
+  
   const senderUser = await User.findById(sender)
   if(!senderUser){
     return res.json({"error":"No such User found"})
@@ -179,7 +180,7 @@ app.post("/message/send",async(req:Request,res:Response) => {
     }
   })
   
-  const newChat = await Chat.findByIdAndUpdate(chatId,{$push:{chats:{$each:[{message,sender:senderUser.name,senderId:sender}],$position:0}}},{new:true})
+  const newChat = await Chat.findByIdAndUpdate(chatId,{$push:{chats:{$each:[{message,sender:senderUser.name,senderId:sender,awsFileKey, awsFileType}],$position:0}}},{new:true})
   if(!newChat){
     return res.json({"error":"chat not found"})
   }
