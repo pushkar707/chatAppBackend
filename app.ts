@@ -224,11 +224,14 @@ app.post("/profile/change", async(req:Request, res:Response) => {
     await User.findByIdAndUpdate(id, {username})
     return res.json({result:true})
   }
-  if(profileImageKey){
+  
+  if(profileImageKey.length){
     
   }
-
-
+  if (profileImageKey == ""){
+    await User.findByIdAndUpdate(id, {imageUrl:""})
+    return res.json({result:true})
+  }
 })
 
 
