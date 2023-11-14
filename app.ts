@@ -6,6 +6,7 @@ import cors from "cors"
 import cookieParser from "cookie-parser"
 import bodyParser = require("body-parser");
 import Chat from "./models/Chat";
+import * as jwt from "jsonwebtoken"
 require('dotenv').config()
 
 import http from "http"
@@ -74,8 +75,13 @@ app.post("/register",async(req:Request,res:Response) => {
   
   const user = new User({name,email,password:hash,username})
   await user.save()
-  res.cookie("userId",user.id)
-  return res.json({success:true, id:user.id})
+  if(process.env.JWT_SECRET){
+    const token = jwt.sign({id: user.id},process.env.JWT_SECRET)
+    res.cookie("signInToken",token)
+    return res.json({success:true, id:user.id})
+  }
+  // res.cookie("userId",user.id)
+  // return res.json({success:true, id:user.id})
 })
 
 app.post("/login",async(req:Request,res: Response) => {
@@ -93,8 +99,12 @@ app.post("/login",async(req:Request,res: Response) => {
       return res.json({error:"Invalid login details"})
     }  
   }
-  res.cookie("userId",user.id)
-  return res.json({success:true, id:user.id})
+
+  if(process.env.JWT_SECRET){
+    const token = jwt.sign({id: user.id},process.env.JWT_SECRET)
+    res.cookie("signInToken",token)
+    return res.json({success:true, id:user.id})
+  }
 })
 
 // Check username while search and setting username
