@@ -16,7 +16,7 @@ const app: Express = express()
 const server = http.createServer(app);
 const io = new Server(server,{
   cors:{
-    origin: "http://localhost:3000"
+    origin: process.env.FRONTEND_CORS_HOST
   }
 });
 
@@ -41,7 +41,7 @@ mongoose.connect(process.env.MONGO_DB_URI || "")
 
 
 app.use(cors({
-  origin:'http://localhost:3000', 
+  origin:process.env.FRONTEND_CORS_HOST, 
   credentials:true,
 }))
 app.use(bodyParser.urlencoded({extended:true}))
