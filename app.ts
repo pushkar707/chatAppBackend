@@ -77,7 +77,7 @@ app.post("/register",async(req:Request,res:Response) => {
   await user.save()
   if(process.env.JWT_SECRET){
     const token = jwt.sign({id: user.id},process.env.JWT_SECRET)
-    res.cookie("signInToken",token,{domain:process.env.FRONTEND_CORS_HOST,sameSite:"none"})
+    res.cookie("signInToken",token,{domain:process.env.FRONTEND_CORS_HOST,sameSite:"none",secure:true})
     return res.json({success:true, id:user.id})
   }
   // res.cookie("userId",user.id)
@@ -102,7 +102,7 @@ app.post("/login",async(req:Request,res: Response) => {
 
   if(process.env.JWT_SECRET){
     const token = jwt.sign({id: user.id},process.env.JWT_SECRET)
-    res.cookie("signInToken",token,{domain:process.env.FRONTEND_CORS_HOST,sameSite:"none"})
+    res.cookie("signInToken",token,{domain:process.env.FRONTEND_CORS_HOST,sameSite:"none",secure:true})
     return res.json({success:true, id:user.id})
   }
 })
