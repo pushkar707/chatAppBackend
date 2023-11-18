@@ -78,10 +78,8 @@ app.post("/register",async(req:Request,res:Response) => {
   if(process.env.JWT_SECRET){
     const token = jwt.sign({id: user.id},process.env.JWT_SECRET)
     res.cookie("signInToken",token,{sameSite:"none",secure:true, httpOnly:false})
-    return res.json({success:true, id:user.id})
+    return res.json({success:true, id:user.id,token})
   }
-  // res.cookie("userId",user.id)
-  // return res.json({success:true, id:user.id})
 })
 
 app.post("/login",async(req:Request,res: Response) => {
